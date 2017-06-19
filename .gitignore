@@ -1,0 +1,7 @@
+# remove data file
+*.root
+*.slcio
+*.stdhep
+*.log
+
+shinshu/
