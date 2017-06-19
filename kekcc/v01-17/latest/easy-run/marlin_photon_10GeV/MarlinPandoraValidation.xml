@@ -33,9 +33,9 @@
   </execute>
 
   <global>
-    <parameter name="LCIOInputFiles"> /home/ilc/reima/work_folder/data/photon_10GeV.slcio
+    <parameter name="LCIOInputFiles"> ../data/photon_10GeV.slcio
     </parameter>
-    <parameter name="GearXMLFile" value="/home/ilc/reima/work_folder/data/gear.xml"/>
+    <parameter name="GearXMLFile" value="../data/gear.xml"/>
     <parameter name="MaxRecordNumber" value="0"/>
     <parameter name="SkipNEvents" value="0"/>
     <parameter name="SupressCheck" value="false"/>
