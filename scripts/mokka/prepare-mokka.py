@@ -16,9 +16,9 @@ import random
 # Stdhepon_g4 is select use stdhep file or g4gun
 # If you want use stdhep file, it's parameter true
 # If you want use g4gun, it's parameter false
-Batch_NUM = 1
-Beamon_g4 = '1000'
-Stdhepon_g4 = True #Ture or False
+Batch_NUM = 2
+Beamon_g4 = '100'
+Stdhepon_g4 = True #True or False
 ILDdetectorModel_Steer = 'ILD_o1_v05' ## ILD_o1_v05;for Si+AHCAL, ILD_o2_v05;for Si+SDHCAL, ILD_o3_v05;for ScSiMix+AHCAL, 
 
 ### stdhep file
@@ -75,7 +75,7 @@ for Num_Bsub in range(Batch_NUM):
 	Data_Bsub += 'bsub ' + '-q '  + Batch_que + ' '
 	Data_Bsub += '-o runmokka' + str(Num_Bsub) + '.log '
 	Data_Bsub +=  '-J runmokka' + str(Num_Bsub) + ' '
-	Data_Bsub +=  '"(./mokka.sh ' + str(Num_Bsub).zfill(2) + ' > mokka' + str(Num_Bsub).zfill(2) + '.log 2>&1 )" &\n'
+	Data_Bsub +=  '"(sh mokka.sh ' + str(Num_Bsub).zfill(2) + ' > mokka' + str(Num_Bsub).zfill(2) + '.log 2>&1 )" &\n'
 
 File_Make(Name_Bsub, Data_Bsub)
 
@@ -85,14 +85,14 @@ Data_Shellscript = '''#!/bin/bash
 
 '''
 
-Env_ilcsoft_Shellscript = 'source ' + DIR_ILCSOFT + '/init_ilcsoft' + '\n'
+Env_ilcsoft_Shellscript = 'source ' + DIR_ILCSOFT + '/init_ilcsoft.sh' + '\n'
 Data_Shellscript += Env_ilcsoft_Shellscript
 
 Env_ildconfig_Shellscript = 'MokkaDBConfig=' + DIR_ILDCONFIG + '/MokkaDBConfig' + '\n'
 Env_ildconfig_Shellscript += '''export MOKKA_DUMP_FILE=${MokkaDBConfig}/mokka-dbdump.sql.tgz
 export MOKKA_TMP_DIR=/tmp/mokka-$(date +%F--%H-%M-%S)-$$
 mkdir -p ${MOKKA_TMP_DIR}
-export MSG_LOG_FILE=`pwd`/mokka-run${$1}.log
+export MSG_LOG_FILE=`pwd`/mokka-run${1}.log
 StandardConfig=${ildconfigdir}/StandardConfig/current
 '''
 
@@ -206,9 +206,9 @@ Data2_Steer = '''
 for Num_Steer in range(Batch_NUM):
 	Data_Steer = Data1_Steer
 	if Stdhepon_g4:
-		Data_Steer += '/Mokka/init/lcioFilename data/' + StdhepName_g4macro.replace('.g4', 'slcio')
+		Data_Steer += '/Mokka/init/lcioFilename data/' + StdhepName_g4macro.replace('.g4', '.slcio') + '\n'
 	else:
-		Data_Steer += '/Mokka/init/lcioFilename data/' + Name_g4macro.replace('.g4', 'slcio') + '\n'
+		Data_Steer += '/Mokka/init/lcioFilename data/' + Name_g4macro.replace('.g4', '.slcio') + '\n'
 	RandomSeed_Steer = str(random.randint(0, 999999))
 	McRunNumber_Steer = RandomSeed_Steer
 	Data_Steer += '/Mokka/init/randomSeed ' + RandomSeed_Steer + '\n'
