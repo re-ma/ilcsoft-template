@@ -16,6 +16,7 @@ import random
 # Stdhepon_g4 is select use stdhep file or g4gun
 # If you want use stdhep file, it's parameter true
 # If you want use g4gun, it's parameter false
+Batch_que = 's'
 Batch_NUM = 2
 Beamon_g4 = '100'
 Stdhepon_g4 = True #True or False
@@ -39,11 +40,10 @@ EnegyUnit_g4 = 'GeV'
 ### enviroment setting
 DIR_ILCSOFT = '/sw/ilc/ilcsoft/cvmfs/x86_64_gcc44_sl6/v01-17-11'
 DIR_ILDCONFIG = '/sw/ilc/ilcsoft/cvmfs/ILDConfig/v01-17-11-p02'
-Name_Bsub = 'bsub.sh'
-Name_Shellscript = 'mokka.sh'
+Name_Bsub = 'mokka/bsub.sh'
+Name_Shellscript = 'mokka/mokka.sh'
 Name_g4macro = '.g4'
 Name_Steer = '.steer'
-Batch_que = 's'
 
 ### def file make function
 def File_Make(File_Name, File_Data):
@@ -54,6 +54,12 @@ def File_Make(File_Name, File_Data):
 ### replace 00 at stdhep file
 if Stdhepon_g4:
 	StdhepName_g4 = Stdhepfile_g4.replace('.stdhep', '')
+
+### make data directory
+if os.path.exists("data") is False:
+	os.mkdir("data")
+if os.path.exists("mokka") is False:
+	os.mkdir("mokka")
 
 ### make FileName
 FileName_Bsub = Name_Bsub
@@ -73,9 +79,9 @@ Data_Bsub ='#!/bin/bash\n'
 
 for Num_Bsub in range(Batch_NUM):
 	Data_Bsub += 'bsub ' + '-q '  + Batch_que + ' '
-	Data_Bsub += '-o runmokka' + str(Num_Bsub) + '.log '
+	Data_Bsub += '-o ../data/runmokka' + str(Num_Bsub) + '.log '
 	Data_Bsub +=  '-J runmokka' + str(Num_Bsub) + ' '
-	Data_Bsub +=  '"(sh mokka.sh ' + str(Num_Bsub).zfill(2) + ' > mokka' + str(Num_Bsub).zfill(2) + '.log 2>&1 )" &\n'
+	Data_Bsub +=  '"(sh mokka.sh ' + str(Num_Bsub).zfill(2) + ' > ../data/mokka' + str(Num_Bsub).zfill(2) + '.log 2>&1 )" &\n'
 
 File_Make(Name_Bsub, Data_Bsub)
 
@@ -92,7 +98,7 @@ Env_ildconfig_Shellscript = 'MokkaDBConfig=' + DIR_ILDCONFIG + '/MokkaDBConfig' 
 Env_ildconfig_Shellscript += '''export MOKKA_DUMP_FILE=${MokkaDBConfig}/mokka-dbdump.sql.tgz
 export MOKKA_TMP_DIR=/tmp/mokka-$(date +%F--%H-%M-%S)-$$
 mkdir -p ${MOKKA_TMP_DIR}
-export MSG_LOG_FILE=`pwd`/mokka-run${1}.log
+export MSG_LOG_FILE=`pwd`../data/mokka-run${1}.log
 StandardConfig=${ildconfigdir}/StandardConfig/current
 '''
 
@@ -131,7 +137,7 @@ if Stdhepon_g4:
 		Data_g4macro += Stdhepdir_g4
 		Data_g4macro += Stdhepfile_g4.replace('00', str(Num_g4).zfill(2)) + '\n'
 		Data_g4macro += Data2_g4macro
-		File_Make(StdhepName_g4macro, Data_g4macro)
+		File_Make('mokka/' + StdhepName_g4macro, Data_g4macro)
 else:
 	Name_g4macro = Particle_g4 +  '_' + EnegyValue_g4 + EnegyUnit_g4 + Name_g4macro
 	Data_g4macro = Data1_g4macro
@@ -146,7 +152,7 @@ else:
 '''
 	Data_g4macro += '/gun/particle ' + Particle_g4 + '\n'
 	Data_g4macro += Data2_g4macro
-	File_Make(Name_g4macro, Data_g4macro)
+	File_Make('mokka/' + Name_g4macro, Data_g4macro)
 
 ### make steerging file data
 Data1_Steer = '''##########################
@@ -206,9 +212,9 @@ Data2_Steer = '''
 for Num_Steer in range(Batch_NUM):
 	Data_Steer = Data1_Steer
 	if Stdhepon_g4:
-		Data_Steer += '/Mokka/init/lcioFilename data/' + StdhepName_g4macro.replace('.g4', '.slcio') + '\n'
+		Data_Steer += '/Mokka/init/lcioFilename ../data/' + StdhepName_g4macro.replace('.g4', '.slcio') + '\n'
 	else:
-		Data_Steer += '/Mokka/init/lcioFilename data/' + Name_g4macro.replace('.g4', '.slcio') + '\n'
+		Data_Steer += '/Mokka/init/lcioFilename ../data/' + Name_g4macro.replace('.g4', '.slcio') + '\n'
 	RandomSeed_Steer = str(random.randint(0, 999999))
 	McRunNumber_Steer = RandomSeed_Steer
 	Data_Steer += '/Mokka/init/randomSeed ' + RandomSeed_Steer + '\n'
@@ -219,4 +225,4 @@ for Num_Steer in range(Batch_NUM):
 	else:
 		Data_Steer += '/Mokka/init/initialMacroFile ' + Name_g4macro
 		NameNum_Steer = Particle_g4 +  '_' + EnegyValue_g4 + EnegyUnit_g4 + '_' + str(Num_Steer).zfill(2) + Name_Steer
-	File_Make(NameNum_Steer, Data_Steer)
+	File_Make('mokka/' + NameNum_Steer, Data_Steer)
