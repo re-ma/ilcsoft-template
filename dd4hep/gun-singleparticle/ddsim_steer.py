@@ -1,37 +1,21 @@
-### stearing file for dd4hep
-### bring from /cvmfs/ilc.desy.de/sw/ILDConfig/v01-19-04/StandardConfig/lcgeo_current/ddsim_steer_default.py 
-### easiry set useful parameter of my simulation
-infileEnv = "$lcgeo_DIR/ILD/compact/ILD_l5_v01/ILD_l5_v01"
-gunParticle = "gamma"
-numberOfEvents = 10
-nEnergy = 10
-outfileName = particleType + "_" + str(nEnergy) + "GeV.slcio"
-gunDistribution = "uniform"
-thitaMin = None 
-thitaMax = 0.7*rad
-
-### convert unit
-gunEnergy = nEnergy*GeV
-
 ######################################################################
-# steering file for ddsim with default values, created with:
 #
-#    ddsim --dumpSteeringFile > ddsim_steer_default.py 
+#  standard steering file for ILD simulation 
+#  
 #
-# using v01-19-02
 #
 ######################################################################
 from DDSim.DD4hepSimulation import DD4hepSimulation
-##from SystemOfUnits import mm, GeV, MeV
-from SystemOfUnits import mm, GeV, MeV, rad
+from SystemOfUnits import m, mm, GeV, MeV, rad
+import os
+
 SIM = DD4hepSimulation()
 
 ## The compact XML file
-##SIM.compactFile = ""
-SIM.compactFile = infileEnv
+SIM.compactFile = ""
 ## Lorentz boost for the crossing angle, in radian!
-SIM.crossingAngleBoost = 0.0
-SIM.enableDetailedShowerMode = False
+SIM.crossingAngleBoost = 7.e-3*rad
+SIM.enableDetailedShowerMode = True
 SIM.enableG4GPS = False
 SIM.enableG4Gun = False
 SIM.enableGun = False
@@ -40,16 +24,14 @@ SIM.inputFiles = []
 ## Macro file to execute for runType 'run' or 'vis'
 SIM.macroFile = ""
 ## number of events to simulate, used in batch mode
-##SIM.numberOfEvents = 0
-SIM.numberOfEvents = numberOfEvents
+SIM.numberOfEvents = 10
 ## Outputfile from the simulation,only lcio output is supported
-##SIM.outputFile = "dummyOutput.slcio"
-SIM.outputFile = outfileName
+SIM.outputFile = "dummyOutput.slcio"
 ## Physics list to use in simulation
 SIM.physicsList = None
 ## Verbosity use integers from 1(most) to 7(least) verbose
 ## or strings: VERBOSE, DEBUG, INFO, WARNING, ERROR, FATAL, ALWAYS
-SIM.printLevel = 3
+SIM.printLevel = "INFO"
 ## The type of action to do in this invocation
 ## batch: just simulate some events, needs numberOfEvents, and input file or gun
 ## vis: enable visualisation, run the macroFile if it is set
@@ -94,6 +76,8 @@ SIM.action.calo = "Geant4ScintillatorCalorimeterAction"
 ##         example: SIM.action.mapActions['tpc'] = "TPCSDAction" 
 SIM.action.mapActions = {}
 
+SIM.action.mapActions['tpc'] = "TPCSDAction"
+
 ##  set the default tracker action 
 SIM.action.tracker = ('Geant4TrackerWeightedAction', {'HitPositionCombination': 2, 'CollectSingleDeposits': False})
 
@@ -101,14 +85,14 @@ SIM.action.tracker = ('Geant4TrackerWeightedAction', {'HitPositionCombination': 
 ################################################################################
 ## Configuration for the magnetic field (stepper) 
 ################################################################################
-SIM.field.delta_chord = 0.25
+SIM.field.delta_chord = 1e-05
 SIM.field.delta_intersection = 1e-05
-SIM.field.delta_one_step = 0.0001
-SIM.field.eps_max = 0.001
-SIM.field.eps_min = 5e-05
+SIM.field.delta_one_step = .5e-03*mm
+SIM.field.eps_max = 1e-04
+SIM.field.eps_min = 1e-05
 SIM.field.equation = "Mag_UsualEqRhs"
-SIM.field.largest_step = 10000.0
-SIM.field.min_chord_step = 0.01
+SIM.field.largest_step = 10.*m
+SIM.field.min_chord_step = 1.e-2*mm
 SIM.field.stepper = "HelixSimpleRunge"
 
 
@@ -143,6 +127,8 @@ SIM.filter.filters = {'edep0': {'parameter': {'Cut': 0.0}, 'name': 'EnergyDeposi
 ##  a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
 SIM.filter.mapDetFilter = {}
 
+SIM.filter.mapDetFilter['TPC'] = "edep0"
+
 ##  default filter for tracking sensitive detectors; this is applied if no other filter is used for a tracker
 SIM.filter.tracker = "edep1kev"
 
@@ -176,10 +162,8 @@ SIM.gun.direction = (0, 0, 1)
 ## 
 ##     Setting a distribution will set isotrop = True
 ##     
-##SIM.gun.distribution = None
-SIM.gun.distribution = gunDistribution
-##SIM.gun.energy = 10000.0
-SIM.gun.energy = gunEnergy
+SIM.gun.distribution = None
+SIM.gun.energy = 10000.0
 
 ##  isotropic distribution for the particle gun
 ## 
@@ -188,8 +172,7 @@ SIM.gun.energy = gunEnergy
 ##     
 SIM.gun.isotrop = False
 SIM.gun.multiplicity = 1
-##SIM.gun.particle = "mu-"
-SIM.gun.particle = gunParticle
+SIM.gun.particle = "mu-"
 SIM.gun.phiMax = None
 
 ## Minimal azimuthal angle for random distribution
@@ -197,10 +180,8 @@ SIM.gun.phiMin = None
 
 ##  position of the particle gun, 3 vector 
 SIM.gun.position = (0.0, 0.0, 0.0)
-##SIM.gun.thetaMax = None
-SIM.gun.thetaMax = gunthitaMax
-##SIM.gun.thetaMin = None
-SIM.gun.thetaMin = gunthitaMin
+SIM.gun.thetaMax = None
+SIM.gun.thetaMin = None
 
 
 ################################################################################
@@ -236,7 +217,7 @@ SIM.part.keepAllParticles = False
 SIM.part.minDistToParentVertex = 2.2e-14
 
 ## MinimalKineticEnergy to store particles created in the tracking region
-SIM.part.minimalKineticEnergy = 1.0
+SIM.part.minimalKineticEnergy = 1*MeV
 
 ##  Printout at End of Tracking 
 SIM.part.printEndTracking = False
@@ -252,11 +233,11 @@ SIM.part.saveProcesses = ['Decay']
 ## Configuration for the PhysicsList 
 ################################################################################
 SIM.physics.decays = True
-SIM.physics.list = "FTFP_BERT"
+SIM.physics.list = "QGSP_BERT" # "FTFP_BERT"
 
 ##  location of particle.tbl file containing extra particles and their lifetime information
 ##     
-SIM.physics.pdgfile = None
+SIM.physics.pdgfile = os.path.join( os.environ.get("DD4HEP"),  "DDG4/examples/particle.tbl")
 
 ##  The global geant4 rangecut for secondary production
 ## 
@@ -267,7 +248,7 @@ SIM.physics.pdgfile = None
 ##     Set printlevel to DEBUG to see a printout of all range cuts,
 ##     but this only works if range cut is not "None"
 ##     
-SIM.physics.rangecut = 0.7
+SIM.physics.rangecut =  0.1*mm
 
 
 ################################################################################
