@@ -1,6 +1,12 @@
 #!/bin/bash
 
-mkdir data
+ThisDIR="$HOME/group-folder/"`pwd`"/data"
+
+echo "make $ThisDIR"
+mkdir -p $ThisDIR
+
+ln -s $ThisDIR data
+
 mkdir logs
 
 bsub -q s -o bsub.log -J uds910_d4 \
