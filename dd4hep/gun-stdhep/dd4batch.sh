@@ -1,11 +1,11 @@
 #!/bin/bash
 
-ThisDIR="$HOME/group-folder/"`pwd`"/data"
+DataDIR="$HOME/group-folder/"`pwd`"/data"
 
-echo "make $ThisDIR"
-mkdir -p $ThisDIR
+echo "make $DataDIR"
+mkdir -p $DataDIR
 
-ln -s $ThisDIR data
+ln -s $DataDIR data
 
 mkdir logs
 
