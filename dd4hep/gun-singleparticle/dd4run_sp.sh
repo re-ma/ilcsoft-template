@@ -11,5 +11,5 @@ ddsim --outputFile=$1 \
 --gun.distribution="uniform" \
 --gun.thetaMin="0.71" \
 --gun.thetaMax="2.43" \
---compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
+--compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
 --steeringFile=./ddsim_steer.py
