@@ -85,13 +85,19 @@
     <!-- ========== calorimeter digitization and PFA ======= -->
 
     <!-- merge ECal collections from even and odd layers first -->
-    <processor name="MergeCollectionsEcalBarrelHits" />
+    <!--processor name="MergeCollectionsEcalBarrelHits" /-->
     <processor name="MergeCollectionsEcalEndcapHits" />
 
     <!-- Realistic digitisation for Ecal -->
-    <processor name="MyEcalBarrelDigi"/>
-    <processor name="MyEcalBarrelReco"/>
-    <processor name="MyEcalBarrelGapFiller"/>
+    <!-- Ecal Barrel Even Layer -->
+    <processor name="MyEcalBarrelScEvenDigi"/>
+    <processor name="MyEcalBarrelScEvenReco"/>
+    <processor name="MyEcalBarrelScEvenGapFiller"/>
+
+    <!-- Ecal Barrel Odd Layer -->
+    <processor name="MyEcalBarrelScOddDigi"/>
+    <processor name="MyEcalBarrelScOddReco"/>
+    <processor name="MyEcalBarrelScOddGapFiller"/>
     
     <processor name="MyEcalEndcapDigi"/>
     <processor name="MyEcalEndcapReco"/>
@@ -1236,11 +1242,12 @@
   </processor>
 
   <!--### the Ecal barrel ###-->
+  <!--### the Ecal barrel Even Layer###-->
   <!-- digitisation -->
-  <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiScinPpd">
-    <parameter name="inputHitCollections"> EcalBarrelCollection </parameter>
-    <parameter name="outputHitCollections"> EcalBarrelCollectionDigi </parameter>
-    <parameter name="outputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
+  <processor name="MyEcalBarrelScEvenDigi" type="RealisticCaloDigiScinPpd">
+    <parameter name="inputHitCollections"> ECalBarrelScHitsEven </parameter>
+    <parameter name="outputHitCollections"> EcalBarrelScEvenCollectionDigi </parameter>
+    <parameter name="outputRelationCollections"> EcalBarrelScEvenRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
@@ -1253,11 +1260,11 @@
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalBarrelReco" type="RealisticCaloRecoScinPpd">
-    <parameter name="inputHitCollections"> EcalBarrelCollectionDigi </parameter>
-    <parameter name="inputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
-    <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
-    <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
+  <processor name="MyEcalScEvenBarrelReco" type="RealisticCaloRecoScinPpd">
+    <parameter name="inputHitCollections"> EcalBarrelScEvenCollectionDigi </parameter>
+    <parameter name="inputRelationCollections"> EcalBarrelScEvenRelationsSimDigi </parameter>
+    <parameter name="outputHitCollections"> EcalBarrelScEvenCollectionRec </parameter>
+    <parameter name="outputRelationCollections"> EcalBarrelScEvenRelationsSimRec </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <parameter name="ppd_mipPe"> 7 </parameter> 
     <parameter name="ppd_npix"> 10000 </parameter> 
@@ -1266,14 +1273,55 @@
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
-  <processor name="MyEcalBarrelGapFiller" type="BruteForceEcalGapFiller">
-    <parameter name="inputHitCollection"> EcalBarrelCollectionRec </parameter>
-    <parameter name="outputHitCollection"> EcalBarrelCollectionGapHits </parameter>
+  <processor name="MyEcalBarrelScEvenGapFiller" type="BruteForceEcalGapFiller">
+    <parameter name="inputHitCollection"> EcalBarrelScEvenCollectionRec </parameter>
+    <parameter name="outputHitCollection"> EcalBarrelScEvenCollectionGapHits </parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
     <parameter name="CellIDModuleString"> module </parameter>
     <parameter name="CellIDStaveString"> stave </parameter>
     <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
   </processor>
+
+  <!--### the Ecal barrel Odd Layer###-->
+  <!-- digitisation -->
+  <processor name="MyEcalBarrelScOddDigi" type="RealisticCaloDigiScinPpd">
+    <parameter name="inputHitCollections"> ECalEndcapScHitsOdd </parameter>
+    <parameter name="outputHitCollections"> EcalBarrelScOddCollectionDigi </parameter>
+    <parameter name="outputRelationCollections"> EcalBarrelScOddRelationsSimDigi </parameter>
+    <parameter name="threshold"> 0.5 </parameter>
+    <parameter name="thresholdUnit"> MIP </parameter>
+    <parameter name="timingCut"> 1  </parameter>
+    <!-- the ave energy deposition of a MIP in the scint -->
+    <parameter name="calibration_mip">0.0001575</parameter>
+    <parameter name="ppd_mipPe"> 7 </parameter>
+    <parameter name="ppd_npix"> 10000 </parameter>
+    <parameter name="ppd_npix_uncert"> 0 </parameter>
+    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!-- reconstruction -->
+  <processor name="MyEcalScOddBarrelReco" type="RealisticCaloRecoScinPpd">
+    <parameter name="inputHitCollections"> EcalBarrelScOddCollectionDigi </parameter>
+    <parameter name="inputRelationCollections"> EcalBarrelScEvenRelationsSimDigi </parameter>
+    <parameter name="outputHitCollections"> EcalBarrelScOddCollectionRec </parameter>
+    <parameter name="outputRelationCollections"> EcalBarrelScOddRelationsSimRec </parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
+    <parameter name="ppd_mipPe"> 7 </parameter> 
+    <parameter name="ppd_npix"> 10000 </parameter> 
+    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+    <parameter name="calibration_factorsMipGev">0.00641222630095 0.0130248379264</parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+  </processor>
+  <!-- gap filling -->
+  <processor name="MyEcalBarrelScOddGapFiller" type="BruteForceEcalGapFiller">
+    <parameter name="inputHitCollection"> EcalBarrelScOddCollectionRec </parameter>
+    <parameter name="outputHitCollection"> EcalBarrelScOddCollectionGapHits </parameter>
+    <parameter name="CellIDLayerString"> layer </parameter>
+    <parameter name="CellIDModuleString"> module </parameter>
+    <parameter name="CellIDStaveString"> stave </parameter>
+    <parameter name="expectedInterModuleDistance"> 7.0 </parameter>
+  </processor>
+
   <!--### the Ecal endcaps ###-->
   <!-- digitisation -->
   <processor name="MyEcalEndcapDigi" type="RealisticCaloDigiScinPpd">
