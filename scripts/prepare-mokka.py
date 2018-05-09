@@ -19,8 +19,8 @@ import random
 Batch_que = 's'
 Batch_NUM = 2
 Beamon_g4 = '100'
-Stdhepon_g4 = True #True or False
-ILDdetectorModel_Steer = 'ILD_o1_v05' ## ILD_o1_v05;for Si+AHCAL, ILD_o2_v05;for Si+SDHCAL, ILD_o3_v05;for ScSiMix+AHCAL, 
+Stdhepon_g4 = False #True or False
+ILDdetectorModel_Steer = 'ILD_o3_v05' ## ILD_o1_v05;for Si+AHCAL, ILD_o2_v05;for Si+SDHCAL, ILD_o3_v05;for ScSiMix+AHCAL, 
 
 ### stdhep file
 Stdhepdir_g4 = '/group/ilc/soft/samples/gen/MThomson/stdhep/'
@@ -79,7 +79,7 @@ Data_Bsub ='#!/bin/bash\n'
 
 for Num_Bsub in range(Batch_NUM):
 	Data_Bsub += 'bsub ' + '-q '  + Batch_que + ' '
-	Data_Bsub += '-o ../data/runmokka' + str(Num_Bsub) + '.log '
+	Data_Bsub += '-o ../data/bsub_runmokka' + str(Num_Bsub) + '.log '
 	Data_Bsub +=  '-J runmokka' + str(Num_Bsub) + ' '
 	Data_Bsub +=  '"(sh mokka.sh ' + str(Num_Bsub).zfill(2) + ' > ../data/mokka' + str(Num_Bsub).zfill(2) + '.log 2>&1 )" &\n'
 
@@ -98,7 +98,7 @@ Env_ildconfig_Shellscript = 'MokkaDBConfig=' + DIR_ILDCONFIG + '/MokkaDBConfig' 
 Env_ildconfig_Shellscript += '''export MOKKA_DUMP_FILE=${MokkaDBConfig}/mokka-dbdump.sql.tgz
 export MOKKA_TMP_DIR=/tmp/mokka-$(date +%F--%H-%M-%S)-$$
 mkdir -p ${MOKKA_TMP_DIR}
-export MSG_LOG_FILE=`pwd`../data/mokka-run${1}.log
+export MSG_LOG_FILE=`pwd`/../data/mokka-run${1}.log
 StandardConfig=${ildconfigdir}/StandardConfig/current
 '''
 
@@ -166,8 +166,6 @@ Data1_Steer = '''##########################
 #  -> use -M ILD_ox_v05 , x=1,2,3
 ####################################
 
-/Mokka/init/lcioFilename ../data/uds91.slcio
-
 #/Mokka/init/registerPlugin TrackingOnlyPlugin
 
 # -----FIXME: need to get the correct number for the vertex spread
@@ -214,7 +212,7 @@ for Num_Steer in range(Batch_NUM):
 	if Stdhepon_g4:
 		Data_Steer += '/Mokka/init/lcioFilename ../data/' + StdhepName_g4macro.replace('.g4', '.slcio') + '\n'
 	else:
-		Data_Steer += '/Mokka/init/lcioFilename ../data/' + Name_g4macro.replace('.g4', '.slcio') + '\n'
+		Data_Steer += '/Mokka/init/lcioFilename ../data/' + Name_g4macro.replace('.g4', '_') + str(Num_Steer).zfill(2) + '.slcio' + '\n'
 	RandomSeed_Steer = str(random.randint(0, 999999))
 	McRunNumber_Steer = RandomSeed_Steer
 	Data_Steer += '/Mokka/init/randomSeed ' + RandomSeed_Steer + '\n'
