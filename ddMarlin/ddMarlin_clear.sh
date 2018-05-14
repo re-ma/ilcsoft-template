@@ -5,4 +5,10 @@ rm -r logs
 rm  data/*
 rm -r data
 
-rm gear_ILD_l5_v02_dd4hep.xml
+rm gear*
+
+rm LikelihoodPID*
+rm Pandora*
+rm PfoAnalysis*
+
+rm -rf weightFiles_forLowMomentumMuPiSeparation

@@ -6,7 +6,7 @@ convertToGear default $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml gea
 
 DataDIR="/home/ilc/reima/hybrid-ECAL/dd4hep/ILD_l5_v02/mu-10GeV/data/"
 
-Marlin ddMarlin_Sc.xml \
+Marlin ddMarlin_Sc_woSSA.xml \
 --global.LCIOInputFiles="$DataDIR/mu-10_00.slcio $DataDIR/mu-10_01.slcio $DataDIR/mu-10_02.slcio $DataDIR/mu-10_03.slcio $DataDIR/mu-10_04.slcio $DataDIR/mu-10_05.slcio $DataDIR/mu-10_06.slcio $DataDIR/mu-10_07.slcio $DataDIR/mu-10_08.slcio $DataDIR/mu-10_09.slcio" \
 --global.GearXMLFile=gear_ILD_l5_o1_v02_dd4hep.xml \
 --InitDD4hep.DD4hepXMLFile=$lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_o1_v02.xml
