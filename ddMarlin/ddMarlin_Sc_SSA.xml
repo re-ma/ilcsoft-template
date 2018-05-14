@@ -1252,7 +1252,7 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0001575</parameter>
+    <parameter name="calibration_mip">0.0002407</parameter>
     <parameter name="ppd_mipPe"> 7 </parameter>
     <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
@@ -1292,7 +1292,7 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0001575</parameter>
+    <parameter name="calibration_mip">0.0002407</parameter>
     <parameter name="ppd_mipPe"> 7 </parameter>
     <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
@@ -1332,8 +1332,8 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0001575</parameter>
-    <parameter name="ppd_mipPe"> 9 </parameter>
+    <parameter name="calibration_mip">0.0002407</parameter>
+    <parameter name="ppd_mipPe"> 7 </parameter>
     <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
     <parameter name="ppd_pix_spread"> 0 </parameter>
@@ -1345,7 +1345,7 @@
     <parameter name="inputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
-    <parameter name="ppd_mipPe"> 9 </parameter> 
+    <parameter name="ppd_mipPe"> 7 </parameter> 
     <parameter name="ppd_npix"> 10000 </parameter> 
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
@@ -1371,8 +1371,8 @@
     <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
     <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0001575</parameter>
-    <parameter name="ppd_mipPe"> 9 </parameter>
+    <parameter name="calibration_mip">0.0002407</parameter>
+    <parameter name="ppd_mipPe"> 7 </parameter>
     <parameter name="ppd_npix"> 10000 </parameter>
     <parameter name="ppd_npix_uncert"> 0 </parameter>
     <parameter name="ppd_pix_spread"> 0 </parameter>
@@ -1384,7 +1384,7 @@
     <parameter name="inputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapRingCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimRec </parameter>
-    <parameter name="ppd_mipPe"> 9 </parameter> 
+    <parameter name="ppd_mipPe"> 7 </parameter> 
     <parameter name="ppd_npix"> 10000 </parameter> 
     <parameter name="calibration_layergroups"> 100 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
