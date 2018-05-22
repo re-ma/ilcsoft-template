@@ -17,7 +17,7 @@ if __name__ == "__main__":
     rootTree = rootFile.Get("MyLCTuple")
     #rootTree.Scan()
     #rootTree.Show(1)
-    c1 = rt.TCanvas("C1","Some example plots from LCTuple",1000 , 1000)
+    c1 = rt.TCanvas("C1",sys.argv[2],1000 , 1000)
     c1.Divide(1,2)
     c1.cd(1)
 

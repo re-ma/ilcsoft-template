@@ -1262,7 +1262,7 @@
     <parameter name="ppd_mipPe"> 7 </parameter> 
     <parameter name="ppd_npix"> 10000 </parameter> 
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.00641222630095 0.0130248379264</parameter>
+    <parameter name="calibration_factorsMipGev">0.006846 0.013692</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1301,7 +1301,7 @@
     <parameter name="ppd_npix"> 10000 </parameter> 
     <parameter name="calibration_layergroups"> 20 11 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.0066862777075 0.0135815049851</parameter>
+    <parameter name="calibration_factorsMipGev">0.006846 0.013692</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1340,7 +1340,7 @@
     <parameter name="ppd_npix"> 10000 </parameter> 
     <parameter name="calibration_layergroups"> 100 </parameter>
     <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.0066862777075 0.013581504985</parameter>
+    <parameter name="calibration_factorsMipGev">0.006846 0.013692</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
 
@@ -2027,7 +2027,7 @@
     <!--Set the debug print level-->
     <parameter name="Printing" type="int">0 </parameter>
     <!--Name of the output root file-->
-    <parameter name="RootFile" type="string"> PfoAnalysis.root </parameter>
+    <parameter name="RootFile" type="string"> data/PfoAnalysis.root </parameter>
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
