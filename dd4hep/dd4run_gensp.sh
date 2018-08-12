@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-06/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
 
 ddsim --outputFile=$4 \
 --numberOfEvents=$3 \
@@ -11,5 +11,5 @@ ddsim --outputFile=$4 \
 --gun.distribution="uniform" \
 --gun.thetaMin="0.71" \
 --gun.thetaMax="2.43" \
---compactFile $lcgeo_DIR/ILD/compact/ILD_l5_o1_v02/ILD_l5_o1_v02.xml \
+--compactFile $lcgeo_DIR/ILD/compact/ILD_l5_v02/ILD_l5_v02.xml \
 --steeringFile=./ddsim_steer.py

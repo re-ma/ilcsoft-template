@@ -2,7 +2,8 @@
 
 FNDIR="/hsm/ilc/grid/storm/prod/ilc/mc-dbd/generated/1-calib/single"
 FNPrefix="E1-calib.Ps_22_p010.Glcio_gun.e0.p0.I110141.n1.slcio"
-Event="1000"
+EventPre="ILD_l5_v02_"
+Event="10000"
 BName="g10GeV"
 BJob="s"
 
@@ -15,7 +16,7 @@ ln -s $DataDIR data
 
 mkdir logs
 
-echo "bsub -q ${BJob} -o bsub.log -J ${BName}_d4 \"(sh dd4run.sh ${FNDIR}/${FNPrefix} data/${FNPrefix}.slcio ${Event} > logs/${FNPrefix}.log 2>&1)\""
+echo "bsub -q ${BJob} -o bsub.log -J ${BName}_d4 \"(sh dd4run.sh ${FNDIR}/${FNPrefix} data/${EventPre}${FNPrefix}.slcio ${Event} > logs/${EventPre}${FNPrefix}.log 2>&1)\""
 
 bsub -q ${BJob} -o bsub.log -J ${BName}_d4 \
-"(sh dd4run.sh ${FNDIR}/${FNPrefix} data/${FNPrefix}.slcio ${Event} > logs/${FNPrefix}.log 2>&1)"
+"(sh dd4run.sh ${FNDIR}/${FNPrefix} data/${EventPre}${FNPrefix}.slcio ${Event} > logs/${EventPre}${FNPrefix}.log 2>&1)"

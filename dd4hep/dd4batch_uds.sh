@@ -2,6 +2,7 @@
 
 FNDIR="/hsm/ilc/grid/storm/prod/ilc/mc-dbd/generated/1-calib/uds"
 FNPrefix="E1-calib.Puds91.Gsgreen.e0.p0.I110048."
+EventPre="ILD_l5_v02_"
 FType="stdhep"
 Event="1000"
 BName="uds91"
@@ -16,21 +17,16 @@ ln -s $DataDIR data
 
 mkdir logs
 
-Num=10
-
-echo "bsub -q ${BJob} -o bsub.log -J ${BName}_${Num}d4 \"(sh dd4run.sh ${FNDIR}/${FNPrefix}${Num}.${FType} data/${FNPrefix}${Num}.slcio ${Event} > logs/${FNPrefix}${Num}.log 2>&1)\""
-
-bsub -q ${BJob} -o bsub.log -J ${BName}_${Num}d4 \
-"(sh dd4run.sh ${FNDIR}/${FNPrefix}${Num}.${FType} data/${FNPrefix}${Num}.slcio ${Event} > logs/${FNPrefix}${Num}.log 2>&1)"
-
 Num=1
 
-while [ $Num -lt 10 ]; do
+while [ $Num -lt 11 ]; do
 
-echo "bsub -q ${BJob} -o bsub.log -J ${BName}_${Num}d4 \"(sh dd4run.sh ${FNDIR}/${FNPrefix}0${Num}.${FType} data/${FNPrefix}0${Num}.slcio ${Event} > logs/${FNPrefix}0${Num}.log 2>&1)\""
+pNum=$(printf %02d $Num)
 
-bsub -q ${BJob} -o bsub.log -J ${BName}_${Num}d4 \
-"(sh dd4run.sh ${FNDIR}/${FNPrefix}0${Num}.${FType} data/${FNPrefix}0${Num}.slcio ${Event} > logs/${FNPrefix}0${Num}.log 2>&1)"
+echo "bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}d4 \"(sh dd4run.sh ${FNDIR}/${FNPrefix}${pNum}.${FType} data/${EventPre}${FNPrefix}${pNum}.slcio ${Event} > logs/${EventPre}${FNPrefix}${pNum}.log 2>&1)\""
+
+bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}d4 \
+"(sh dd4run.sh ${FNDIR}/${FNPrefix}${pNum}.${FType} data/${EventPre}${FNPrefix}${pNum}.slcio ${Event} > logs/${EventPre}${FNPrefix}${pNum}.log 2>&1)"
 
 Num=$(( Num + 1 ))
 
