@@ -2,6 +2,11 @@
 
 ## run production event
 
+usege
+```
+sh dd4batch_sp.sh
+```
+
 event details  
 https://confluence.desy.de/display/ILD/3rd+test+production
 
@@ -11,7 +16,7 @@ dd4batch_sp.sh
 ### use uds jet event
 dd4batch_uds.sh
 
-### run simulation
+### dd4hep simulation setting
 dd4run.sh
 
 ## generate perticle for your choice
