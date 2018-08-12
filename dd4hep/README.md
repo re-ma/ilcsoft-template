@@ -5,10 +5,10 @@
 event details  
 https://confluence.desy.de/display/ILD/3rd+test+production
 
-###　use single perticle event
+### use single perticle event
 dd4batch_sp.sh
 
-###　use uds jet event
+### use uds jet event
 dd4batch_uds.sh
 
 ### run simulation
