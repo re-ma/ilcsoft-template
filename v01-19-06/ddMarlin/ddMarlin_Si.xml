@@ -162,7 +162,7 @@
 
   <global>
     <parameter name="LCIOInputFiles">
-      data/ddMarlin_Sc.slcio
+      data/ddMarlin_Si.slcio
     </parameter>
     <parameter name="GearXMLFile" value="gear_ILD_l4_v02_dd4hep.xml"/>
     <parameter name="MaxRecordNumber" value="0"/>
@@ -175,7 +175,7 @@
   <processor name="MyLCIOOutputProcessor" type="LCIOOutputProcessor">
     <!--   standard output: full reconstruction keep all collections -->
     <parameter name="LCIOOutputFile" type="string" >
-      ./data/ddMarlin_Sc_REC.slcio
+      ./data/ddMarlin_Si_REC.slcio
     </parameter>
     <parameter name="LCIOWriteMode" type="string" value="WRITE_NEW"/>
     <!--parameter name="SplitFileSizekB" type="int" value="1992294"/-->
@@ -203,7 +203,7 @@
        DST output: drop all hits, skim MCParticles and keep final Tracks, Clusters, Vertices and  ReconstructedParticles 
       -->
     <parameter name="LCIOOutputFile" type="string" >
-      ./data/ddMarlin_Sc_DST.slcio 
+      ./data/ddMarlin_Si_DST.slcio 
     </parameter>
     <parameter name="DropCollectionTypes" type="StringVec"> 
       MCParticle 
@@ -241,7 +241,7 @@
     <!-- compression of output file 0: false >0: true (default) -->
     <parameter name="Compress" type="int" value="1"/>
     <!-- filename without extension-->
-    <parameter name="FileName" type="string" value="data/ddMarlin_Sc_stdreco"/>
+    <parameter name="FileName" type="string" value="data/ddMarlin_Si_stdreco"/>
     <!-- type of output file xml (default) or root ( only OpenScientist)-->
     <parameter name="FileType" type="string" value="root "/>
   </processor>
@@ -1226,43 +1226,34 @@
 
   <!--#### ECAL ####-->
   <processor name="MergeCollectionsEcalBarrelHits" type="MergeCollections">
-    <parameter name="InputCollections" type="StringVec"> ECalBarrelScHitsEven ECalBarrelScHitsOdd </parameter>
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelSiHitsEven ECalBarrelSiHitsOdd </parameter>
     <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
   </processor>
 
   <processor name="MergeCollectionsEcalEndcapHits" type="MergeCollections">
-    <parameter name="InputCollections" type="StringVec"> ECalEndcapScHitsEven ECalEndcapScHitsOdd </parameter>
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapSiHitsEven ECalEndcapSiHitsOdd </parameter>
     <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
   </processor>
 
   <!--### the Ecal barrel ###-->
-  <!-- digitisation -->
-  <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiScinPpd">
+  <!--digitisation -->
+  <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiSilicon">
     <parameter name="inputHitCollections"> EcalBarrelCollection </parameter>
     <parameter name="outputHitCollections"> EcalBarrelCollectionDigi </parameter>
     <parameter name="outputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
-    <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.000240743</parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter>
-    <parameter name="ppd_npix"> 10000 </parameter>
-    <parameter name="ppd_npix_uncert"> 0 </parameter>
-    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalBarrelReco" type="RealisticCaloRecoScinPpd">
+  <processor name="MyEcalBarrelReco" type="RealisticCaloRecoSilicon">
     <parameter name="inputHitCollections"> EcalBarrelCollectionDigi </parameter>
     <parameter name="inputRelationCollections"> EcalBarrelRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalBarrelCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalBarrelRelationsSimRec </parameter>
     <parameter name="calibration_layergroups"> 20 11 </parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter> 
-    <parameter name="ppd_npix"> 10000 </parameter> 
-    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.006833779 0.013667558</parameter>
+    <parameter name="calibration_factorsMipGev">0.00641222630095 0.0130248379264</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1276,32 +1267,23 @@
   </processor>
   <!--### the Ecal endcaps ###-->
   <!-- digitisation -->
-  <processor name="MyEcalEndcapDigi" type="RealisticCaloDigiScinPpd">
+  <processor name="MyEcalEndcapDigi" type="RealisticCaloDigiSilicon">
     <parameter name="inputHitCollections"> EcalEndcapsCollection </parameter>
     <parameter name="outputHitCollections"> EcalEndcapsCollectionDigi </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
-    <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0002472033</parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter>
-    <parameter name="ppd_npix"> 10000 </parameter>
-    <parameter name="ppd_npix_uncert"> 0 </parameter>
-    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalEndcapReco" type="RealisticCaloRecoScinPpd">
+  <processor name="MyEcalEndcapReco" type="RealisticCaloRecoSilicon">
     <parameter name="inputHitCollections"> EcalEndcapsCollectionDigi </parameter>
     <parameter name="inputRelationCollections"> EcalEndcapsRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapsCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapsRelationsSimRec </parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter> 
-    <parameter name="ppd_npix"> 10000 </parameter> 
     <parameter name="calibration_layergroups"> 20 11 </parameter>
-    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.006833779 0.013667558</parameter>
+    <parameter name="calibration_factorsMipGev">0.0066862777075 0.0135815049851</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- gap filling -->
@@ -1315,32 +1297,23 @@
   </processor>
   <!--### the Ecal endcap rings ###-->
   <!-- digitisation -->
-  <processor name="MyEcalRingDigi" type="RealisticCaloDigiScinPpd">
+  <processor name="MyEcalRingDigi" type="RealisticCaloDigiSilicon">
     <parameter name="inputHitCollections"> EcalEndcapRingCollection </parameter>
     <parameter name="outputHitCollections"> EcalEndcapRingCollectionDigi </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
     <parameter name="threshold"> 0.5 </parameter>
-    <parameter name="thresholdUnit"> MIP </parameter>
     <parameter name="timingCut"> 1  </parameter>
-    <!-- the ave energy deposition of a MIP in the scint -->
-    <parameter name="calibration_mip">0.0002472033</parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter>
-    <parameter name="ppd_npix"> 10000 </parameter>
-    <parameter name="ppd_npix_uncert"> 0 </parameter>
-    <parameter name="ppd_pix_spread"> 0 </parameter>
+    <parameter name="calibration_mip">0.0001575</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
   <!-- reconstruction -->
-  <processor name="MyEcalRingReco" type="RealisticCaloRecoScinPpd">
+  <processor name="MyEcalRingReco" type="RealisticCaloRecoSilicon">
     <parameter name="inputHitCollections"> EcalEndcapRingCollectionDigi </parameter>
     <parameter name="inputRelationCollections"> EcalEndcapRingRelationsSimDigi </parameter>
     <parameter name="outputHitCollections"> EcalEndcapRingCollectionRec </parameter>
     <parameter name="outputRelationCollections"> EcalEndcapRingRelationsSimRec </parameter>
-    <parameter name="ppd_mipPe"> 7 </parameter> 
-    <parameter name="ppd_npix"> 10000 </parameter> 
-    <parameter name="calibration_layergroups"> 100 </parameter>
-    <!-- factor to convert from MIP to GeV (including energy in absorber) -->
-    <parameter name="calibration_factorsMipGev">0.006833779 0.013667558</parameter>
+    <parameter name="calibration_layergroups"> 20 11 </parameter>
+    <parameter name="calibration_factorsMipGev">0.0066862777075 0.0135815049851</parameter>
     <parameter name="CellIDLayerString"> layer </parameter>
   </processor>
 
@@ -2027,7 +2000,7 @@
     <!--Set the debug print level-->
     <parameter name="Printing" type="int">0 </parameter>
     <!--Name of the output root file-->
-    <parameter name="RootFile" type="string"> data/PfoAnalysis.root </parameter>
+    <parameter name="RootFile" type="string"> PfoAnalysis.root </parameter>
     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
     <!--parameter name="Verbosity" type="string">DEBUG </parameter-->
   </processor>
