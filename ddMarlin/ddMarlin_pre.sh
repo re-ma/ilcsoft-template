@@ -4,7 +4,7 @@ DataDIR="$HOME/group-folder/"`pwd`"/data"
 
 if [ -e data ]; then
     echo "OK, data directory is exist"
-else;
+else
     mkdir -p $DataDIR
     ln -s $DataDIR data
     ls -lt data
@@ -13,7 +13,7 @@ fi
 
 if [ -e logs ]; then
     echo "OK, data directory is exist"
-else;
+else
     mkdir logs
     echo "make logs directory"
 fi
