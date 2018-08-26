@@ -33,9 +33,9 @@ fi
 
 if [ "$Num" = "0" ]; then
 
-echo "bsub -q ${BJob} -o bsub.log -J ${BName}_dM \"(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}.slcio ${EventPrefix}${FNPrefix} > logs/${EventPrefix}_ddMarlin.log 2>&1)\""
+echo "bsub -q ${BJob} -o bsub.log -J ${BName}_M \"(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}.slcio ${EventPrefix}${FNPrefix} > logs/${EventPrefix}_ddMarlin.log 2>&1)\""
 
-bsub -q ${BJob} -o bsub.log -J ${BName}_dM \
+bsub -q ${BJob} -o bsub.log -J ${BName}_M \
 "(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}.slcio ${EventPrefix}${FNPrefix} > logs/${EventPrefix}_ddMarlin.log 2>&1)"
 
 else
@@ -44,9 +44,9 @@ while [ $Num -lt $EndNum ]; do
 
 pNum=$(printf %02d $Num)
 
-echo "bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}dM \"(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}${pNum}.slcio ${EventPrefix}${FNPrefix}${pNum} > logs/ddMarlin_${pNum}.log 2>&1)\""
+echo "bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}M \"(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}${pNum}.slcio ${EventPrefix}${FNPrefix}${pNum} > logs/ddMarlin_${pNum}.log 2>&1)\""
 
-bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}dM \
+bsub -q ${BJob} -o bsub.log -J ${BName}_${pNum}M \
 "(sh ddMarlin_run.sh ${FNDIR}/${FNPrefix}${pNum}.slcio ${EventPrefix}${FNPrefix}${pNum} > logs/ddMarlin_${pNum}.log 2>&1)"
 
 Num=$(( Num + 1 ))
