@@ -21,8 +21,6 @@ fi
 ILDConfig_DIR="/cvmfs/ilc.desy.de/sw/ILDConfig/v02-00-01/StandardConfig/production"
 
 cp $ILDConfig_DIR/MarlinStdReco.xml
-cp -r $ILDConfig_DIR/Calibration .
-cp -r $ILDConfig_DIR/CaloDigi .
 cp -r $ILDConfig_DIR/Config .
 cp -r $ILDConfig_DIR/HighLevelReco .
 cp -r $ILDConfig_DIR/PandoraSettings .
