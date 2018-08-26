@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi
+END
+FcalDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/FcalDigi.xml
+END
+SiWEcalDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/SiWEcalDigi.xml
+END
+AHcalDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/AHcalDigi.xml
+END
+ScEcalDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/ScEcalDigi.xml
+END
+MuonDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/MuonDigi.xml
+END
+SDHcalDigi.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/iLCSoft/ILDConfig/!svn/ver/563/tags/v02-00-01/StandardConfig/production/CaloDigi/SDHcalDigi.xml
+END

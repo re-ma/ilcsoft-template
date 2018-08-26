@@ -1,0 +1,30 @@
+
+
+<group name="MuonDigi">
+
+  <processor name="MyDDSimpleMuonDigi" type="DDSimpleMuonDigi">
+    <!--Performs simple digitization of sim calo hits...-->
+    
+    <!--name of the part of the cellID that holds the layer-->
+    <parameter name="CellIDLayerString" type="string"> layer </parameter>
+    
+    <!--Calibration coefficients for MUON-->
+    <parameter name="CalibrMUON" type="FloatVec">${MuonCalibration}</parameter>
+    <!-- maximum hit energy for a MUON hit -->
+    <parameter name="MaxHitEnergyMUON" type="float">2.0</parameter>
+    <!--MUON Collection Names-->
+    <parameter name="MUONCollections" type="StringVec">
+      YokeBarrelCollection YokeEndcapsCollection</parameter>
+    <!--MUON Collection of real Hits-->
+    <parameter name="MUONOutputCollection" type="string">MUON </parameter>
+    <!--Threshold for MUON Hits in GeV-->
+    <parameter name="MUONThreshold" type="float">1e-06 </parameter>
+    <!--The muon detector name for barrel region-->
+    <parameter name="DetectorNameBarrel" type="string"> YokeBarrel </parameter>
+    <!--The muon detector name for endcap region-->
+    <parameter name="DetectorNameEndcap" type="string"> YokeEndcap </parameter>
+    <!--MuonHit Relation Collection-->
+    <parameter name="RelationOutputCollection" type="string">RelationMuonHit </parameter>
+  </processor>
+  
+</group>
