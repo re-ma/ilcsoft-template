@@ -2,11 +2,11 @@
 
 ## param setting
 #FNDIR="/home/ilc/reima/hybrid-ECAL/dd4hep/3rd_ILD_l5_v02/uds91/data"
-FNDIR="/home/ilc/reima/hybrid-ECAL/dd4hep/3rd_ILD_l5_v02/gamma10GeV/data"
+FNDIR="/home/ilc/reima/hybrid-ECAL/dd4hep/v02-00-01/3rd_ILD_l5_v02/mu-10GeV/data"
 #FNPrefix="E1-calib.Puds91.Gsgreen.e0.p0.I110048."
-FNPrefix="ILD_l5_v02_E1-calib.Ps_22_p010.Glcio_gun.e0.p0.I110141.n1.slcio"
+FNPrefix="ILD_l5_v02_E1-calib.Ps_pm13_p100_t20.Glcio_gun.e0.p0.I110119.n1.slcio"
 EventPrefix="test-"
-BName="g10"
+BName="mu-10"
 BJob="s"
 
 Num=0 #0 for single file

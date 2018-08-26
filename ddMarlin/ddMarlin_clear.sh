@@ -18,3 +18,4 @@ rm Tracking/*
 rm -r Tracking
 rm MarlinStdRecoLCTuple.xml
 
+rm MarlinStdRecoParsed*.xml
