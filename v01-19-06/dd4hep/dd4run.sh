@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v02-00-01/init_ilcsoft.sh
+source /cvmfs/ilc.desy.de/sw/x86_64_gcc49_sl6/v01-19-06/init_ilcsoft.sh
 
 ddsim --inputFiles $1 \
 --outputFile=$2 \

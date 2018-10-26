@@ -1,0 +1,114 @@
+
+
+<group name="EcalDigi">
+
+  <processor name="MergeCollectionsEcalBarrelHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalBarrelScHitsEven ECalBarrelScHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalBarrelCollection </parameter>
+  </processor>
+
+  <processor name="MergeCollectionsEcalEndcapHits" type="MergeCollections">
+    <parameter name="InputCollections" type="StringVec"> ECalEndcapScHitsEven ECalEndcapScHitsOdd </parameter>
+    <parameter name="OutputCollection" type="string"> EcalEndcapsCollection </parameter>
+  </processor>
+
+  <!--### the Ecal barrel ###-->
+  <!--digitisation -->
+    <processor name="MyEcalBarrelDigi" type="RealisticCaloDigiScinPpd">
+        <parameter name="inputHitCollections">EcalBarrelCollection</parameter>
+        <parameter name="outputHitCollections">EcalBarrelCollectionDigi</parameter>
+        <parameter name="outputRelationCollections">EcalBarrelRelationsSimDigi</parameter>
+        <parameter name="threshold">0.5</parameter>
+        <parameter name="thresholdUnit">MIP</parameter>
+        <parameter name="timingCut">1</parameter>
+        <!-- the ave energy deposition of a MIP in the scint -->
+        <parameter name="calibration_mip">${EcalBarrelMip}</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="ppd_npix_uncert">0</parameter>
+        <parameter name="ppd_pix_spread">0</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+    <processor name="MyEcalBarrelReco" type="RealisticCaloRecoScinPpd">
+        <parameter name="inputHitCollections">EcalBarrelCollectionDigi</parameter>
+        <parameter name="inputRelationCollections">EcalBarrelRelationsSimDigi</parameter>
+        <parameter name="outputHitCollections">EcalBarrelCollectionRec</parameter>
+        <parameter name="outputRelationCollections">EcalBarrelRelationsSimRec</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="calibration_layergroups">20 11</parameter>
+        <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+        <parameter name="calibration_factorsMipGev">${EcalBarrelEnergyFactors}</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+    <processor name="MyEcalBarrelGapFiller" type="BruteForceEcalGapFiller">
+        <parameter name="inputHitCollection">EcalBarrelCollectionRec</parameter>
+        <parameter name="outputHitCollection">EcalBarrelCollectionGapHits</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+        <parameter name="CellIDModuleString">module</parameter>
+        <parameter name="CellIDStaveString">stave</parameter>
+        <parameter name="expectedInterModuleDistance">7.0</parameter>
+    </processor>
+    <processor name="MyEcalEndcapDigi" type="RealisticCaloDigiScinPpd">
+        <parameter name="inputHitCollections">EcalEndcapsCollection</parameter>
+        <parameter name="outputHitCollections">EcalEndcapsCollectionDigi</parameter>
+        <parameter name="outputRelationCollections">EcalEndcapsRelationsSimDigi</parameter>
+        <parameter name="threshold">0.5</parameter>
+        <parameter name="thresholdUnit">MIP</parameter>
+        <parameter name="timingCut">1</parameter>
+        <!-- the ave energy deposition of a MIP in the scint -->
+        <parameter name="calibration_mip">${EcalEndcapMip}</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="ppd_npix_uncert">0</parameter>
+        <parameter name="ppd_pix_spread">0</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+    <processor name="MyEcalEndcapReco" type="RealisticCaloRecoScinPpd">
+        <parameter name="inputHitCollections">EcalEndcapsCollectionDigi</parameter>
+        <parameter name="inputRelationCollections">EcalEndcapsRelationsSimDigi</parameter>
+        <parameter name="outputHitCollections">EcalEndcapsCollectionRec</parameter>
+        <parameter name="outputRelationCollections">EcalEndcapsRelationsSimRec</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="calibration_layergroups">20 11</parameter>
+        <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+        <parameter name="calibration_factorsMipGev">${EcalEndcapEnergyFactors}</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+    <processor name="MyEcalEndcapGapFiller" type="BruteForceEcalGapFiller">
+        <parameter name="inputHitCollection">EcalEndcapsCollectionRec</parameter>
+        <parameter name="outputHitCollection">EcalEndcapsCollectionGapHits</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+        <parameter name="CellIDModuleString">module</parameter>
+        <parameter name="CellIDStaveString">stave</parameter>
+        <parameter name="expectedInterModuleDistance">7.0</parameter>
+    </processor>
+    <processor name="MyEcalRingDigi" type="RealisticCaloDigiScinPpd">
+        <parameter name="inputHitCollections">EcalEndcapRingCollection</parameter>
+        <parameter name="outputHitCollections">EcalEndcapRingCollectionDigi</parameter>
+        <parameter name="outputRelationCollections">EcalEndcapRingRelationsSimDigi</parameter>
+        <parameter name="threshold">0.5</parameter>
+        <parameter name="thresholdUnit">MIP</parameter>
+        <parameter name="timingCut">1</parameter>
+        <!-- the ave energy deposition of a MIP in the scint -->
+        <parameter name="calibration_mip">${EcalRingMip}</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="ppd_npix_uncert">0</parameter>
+        <parameter name="ppd_pix_spread">0</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+    <processor name="MyEcalRingReco" type="RealisticCaloRecoScinPpd">
+        <parameter name="inputHitCollections">EcalEndcapRingCollectionDigi</parameter>
+        <parameter name="inputRelationCollections">EcalEndcapRingRelationsSimDigi</parameter>
+        <parameter name="outputHitCollections">EcalEndcapRingCollectionRec</parameter>
+        <parameter name="outputRelationCollections">EcalEndcapRingRelationsSimRec</parameter>
+        <parameter name="ppd_mipPe">7</parameter>
+        <parameter name="ppd_npix">10000</parameter>
+        <parameter name="calibration_layergroups">20 11</parameter>
+        <!-- factor to convert from MIP to GeV (including energy in absorber) -->
+        <parameter name="calibration_factorsMipGev">${EcalRingEnergyFactors}</parameter>
+        <parameter name="CellIDLayerString">layer</parameter>
+    </processor>
+</group>

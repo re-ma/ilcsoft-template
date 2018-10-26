@@ -1,8 +1,17 @@
 #!/bin/bash
 
 rm bsub.log
+rm logs/*
 rm -r logs
 rm  data/*
 rm -r data
 
-rm gear_ILD_l5_v02_dd4hep.xml
+rm MarlinStdReco.xml
+rm -rf Config
+rm -rf HighLevelReco
+rm -rf PandoraSettings
+rm -rf ParticleFlow
+rm -rf Tracking
+rm MarlinStdRecoLCTuple.xml
+
+rm MarlinStdRecoParsed*.xml
