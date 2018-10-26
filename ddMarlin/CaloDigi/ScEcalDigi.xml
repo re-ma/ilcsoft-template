@@ -111,4 +111,6 @@
         <parameter name="calibration_factorsMipGev">${EcalRingEnergyFactors}</parameter>
         <parameter name="CellIDLayerString">layer</parameter>
     </processor>
+
 </group>
+

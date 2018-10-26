@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/ilc/reima/init/root_init.sh
+
 FNPrefix=${1}
 
 $ROOTSYS/bin/hadd data/${FNPrefix}all.root \
